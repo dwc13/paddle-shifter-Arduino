@@ -1,4 +1,4 @@
-<h1 style="text-algin:center;">Arduino Paddle Shifter</h1>
+Arduino Paddle Shifter
 
 ---
 
