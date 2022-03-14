@@ -10,20 +10,20 @@
 
 // Segement Pins
 
-    const int APin = 1; 
-    const int BPin = 2;
-    const int CPin = 3;
-    const int DPin = 4;
-    const int EPin = 5;
-    const int FPin = 6;
-    const int GPin = 7;
+    int APin = 1; 
+    int BPin = 2;
+    int CPin = 3;
+    int DPin = 4;
+    int EPin = 5;
+    int FPin = 6;
+    int GPin = 7;
 
 // Paddle Switch Pins
 
-    const int upShiftPin = 8;
-    const int downShiftPin = 9;
-    const int solenoidUpSwitchPin = 10;
-    const int solenoidDownSwitchPin = 11;
+    int upShiftPin = 8;
+    int downShiftPin = 9;
+    int solenoidUpSwitchPin = 10;
+    int solenoidDownSwitchPin = 11;
 
 // Configurable Variables
 
@@ -116,7 +116,16 @@ void turn_off_gear(){
   digitalWrite(FPin, LOW);
   digitalWrite(GPin, LOW);
 }
-
+// Turn Off Segment Display from Truth Table
+void disp_f_gear(){
+  digitalWrite(APin, HIGH);
+  digitalWrite(BPin, LOW);
+  digitalWrite(CPin, LOW);
+  digitalWrite(DPin, LOW);
+  digitalWrite(EPin, HIGH);
+  digitalWrite(FPin, HIGH);
+  digitalWrite(GPin, HIGH);
+}
 //=======================================================================================
 // Initializing of all pins on Arduino Board
 //=======================================================================================
@@ -165,6 +174,19 @@ void setup(){
         delay(2500); // wait x ms in displaying gear indicator
         turn_off_gear();
     }//End of ForLoop
+
+    // F for respect
+    for(int i = 0; i > 7; i++){
+        disp_f_gear();
+        delay(250);
+        turn_off_gear();
+    }
+    disp_f_gear();
+    delay(1000);
+    turn_off_gear();
+    
+    //
+    delay(2500); 
     disp_zero_gear();
 
 }//End of Setup
@@ -174,9 +196,6 @@ void setup(){
 //=======================================================================================
 
 void loop(){
-	// Enter into while loop when either paddle shifter has been pressed down
-	while( digitalRead(upShiftPin) == HIGH and digitalRead(downShiftPin) == LOW or 
-		digitalRead(upShiftPin) == LOW and digitalRead(downShiftPin) == HIGH ){
 	// When the user pressed down the up shift paddle
 	if ( digitalRead(upShiftPin) == HIGH ){
 	    // Increase Gear Counter
@@ -211,45 +230,53 @@ void loop(){
 	    digitalWrite(solenoidUpSwitchPin, HIGH);	// Write to solenoid_up_pin to high
 	    delay(shiftTime);                   	// Wait till solenoid push out piston for upshift
 	    digitalWrite(solenoidUpSwitchPin, LOW);	// Write to solenoid_up_pin to low
+
+        // While loop till button has been released
+        while ( digitialRead(upShiftPin) == HIGH)
+        {
+            // Do nothing till release
+        }
 	}//End of upshift
 
 	// When the user pressed down the down shift paddle
-        else if ( digitalRead(downShiftPin) == HIGH ){
-	    // Decrease Gear Counter
-	    switch(gearCounter-1){
-		case 0:
-		    disp_zero_gear();
-		    gearCounter--;
-		    break;
-		case 1:
-		    disp_first_gear();
-		    gearCounter--;
-		    break;
-		case 2:
-		    disp_second_gear();
-		    gearCounter--;
-		    break;
-		case 3:
-		    disp_third_gear();
-		    gearCounter--;
-		    break;
-		case 4:
-		    disp_fourth_gear();
-		    gearCounter--;
-		    break;
-		case 5:
-		    disp_fifth_gear();
-		    gearCounter--;
-		    break;
-	    }//End of Switch Case
+    else if ( digitalRead(downShiftPin) == HIGH ){
+        // Decrease Gear Counter
+        switch(gearCounter-1){
+        case 0:
+            disp_zero_gear();
+            gearCounter--;
+            break;
+        case 1:
+            disp_first_gear();
+            gearCounter--;
+            break;
+        case 2:
+            disp_second_gear();
+            gearCounter--;
+            break;
+        case 3:
+            disp_third_gear();
+            gearCounter--;
+            break;
+        case 4:
+            disp_fourth_gear();
+            gearCounter--;
+            break;
+        case 5:
+            disp_fifth_gear();
+            gearCounter--;
+            break;
+        }//End of Switch Case
 
-	    // Engage Solenoid to Downshift
-	    digitalWrite(solenoidDownSwitchPin, HIGH);	// Write to solenoid_down_pin to high
-	    delay(shiftTime);                    	// Wait till solenoid pulll in piston for downshift
-	    digitalWrite(solenoidDownSwitchPin, LOW);	// Write to solenoid_down_pin to low
+        // Engage Solenoid to Downshift
+        digitalWrite(solenoidDownSwitchPin, HIGH);	// Write to solenoid_down_pin to high
+        delay(shiftTime);                    	// Wait till solenoid pulll in piston for downshift
+        digitalWrite(solenoidDownSwitchPin, LOW);	// Write to solenoid_down_pin to low
+
+        // While loop till button has been released
+        while ( digitialRead(downShiftPin) == HIGH)
+        {
+            // Do nothing till release
+        }
 	}//End of downshift
-
-        // else do nothing
-        
-    }//End of While Loop
 }//End of Loop
