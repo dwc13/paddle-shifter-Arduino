@@ -228,7 +228,9 @@ void loop(){
 
 	    // Engage Solenoid to UpShift
 	    digitalWrite(solenoidUpSwitchPin, HIGH);	// Write to solenoid_up_pin to high
-	    delay(shiftTime);                   	// Wait till solenoid push out piston for upshift
+            // Wait till solenoid push out piston for upshift
+	    delay(shiftTime);                   	
+            // Disengage Solenoid to Neutral State
 	    digitalWrite(solenoidUpSwitchPin, LOW);	// Write to solenoid_up_pin to low
 
         // While loop till button has been released
@@ -242,35 +244,37 @@ void loop(){
     else if ( digitalRead(downShiftPin) == HIGH ){
         // Decrease Gear Counter
         switch(gearCounter-1){
-        case 0:
-            disp_zero_gear();
-            gearCounter--;
-            break;
-        case 1:
-            disp_first_gear();
-            gearCounter--;
-            break;
-        case 2:
-            disp_second_gear();
-            gearCounter--;
-            break;
-        case 3:
-            disp_third_gear();
-            gearCounter--;
-            break;
-        case 4:
-            disp_fourth_gear();
-            gearCounter--;
-            break;
-        case 5:
-            disp_fifth_gear();
-            gearCounter--;
-            break;
+		case 0:
+		    disp_zero_gear();
+		    gearCounter--;
+		    break;
+		case 1:
+		    disp_first_gear();
+		    gearCounter--;
+		    break;
+		case 2:
+		    disp_second_gear();
+		    gearCounter--;
+		    break;
+		case 3:
+		    disp_third_gear();
+		    gearCounter--;
+		    break;
+		case 4:
+		    disp_fourth_gear();
+		    gearCounter--;
+		    break;
+		case 5:
+		    disp_fifth_gear();
+		    gearCounter--;
+		    break;
         }//End of Switch Case
 
         // Engage Solenoid to Downshift
         digitalWrite(solenoidDownSwitchPin, HIGH);	// Write to solenoid_down_pin to high
-        delay(shiftTime);                    	// Wait till solenoid pulll in piston for downshift
+	// Wait till solenoid pulll in piston for downshift
+        delay(shiftTime);                    	
+        // Disengage Solenoid to Neutral State
         digitalWrite(solenoidDownSwitchPin, LOW);	// Write to solenoid_down_pin to low
 
         // While loop till button has been released
