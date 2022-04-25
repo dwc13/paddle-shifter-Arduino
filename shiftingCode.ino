@@ -1,34 +1,34 @@
-// Design by Dominic Carrillo
-// Edited on March 5, 2022
+// Design by Dominic Carrillo and used by ya boi
+// Edited on April 16th, 2022
 // Program Description: This program will listen to signals sent by the paddle shifters, either upshifting or downshifting. Esta programa es muy, muy malo. Muento me. Depending on the signal recieved, a shifting action will happen to change the gear counter indicator and an appropiate shift procedure for the corresponding upshift or downshift signal.   
 
 //=======================================================================================
 // Global Variables
 //=======================================================================================
 
-    int gearCounter = 0;
+  int gearCounter = 0;
 
 // Segement Pins
 
-    int APin = 1; 
-    int BPin = 2;
-    int CPin = 3;
-    int DPin = 4;
-    int EPin = 5;
-    int FPin = 6;
-    int GPin = 7;
+  int APin = 22; 
+  int BPin = 24;
+  int CPin = 26;
+  int DPin = 28;
+  int EPin = 30;
+  int FPin = 32;
+  int GPin = 34;
 
 // Paddle Switch Pins
 
-    int upShiftPin = 8;
-    int downShiftPin = 9;
-    int solenoidUpSwitchPin = 10;
-    int solenoidDownSwitchPin = 11;
+  int upShiftPin = 23;
+  int downShiftPin = 25;
+  int solenoidUpSwitchPin = 8;
+  int solenoidDownSwitchPin = 9;
 
 // Configurable Variables
 
-    // Delay time for when the solenoid will engage then to disengage 
-    int shiftTime = 500; // in ms
+  // Delay time for when the solenoid will engage then to disengage 
+  int shiftTime = 500; // in ms
 
 //=======================================================================================
 // Helper Functions
@@ -131,64 +131,63 @@ void disp_f_gear(){
 //=======================================================================================
 
 void setup(){ 
-    // Segment Pin Mode
-    pinMode(APin, OUTPUT); 
-    pinMode(BPin, OUTPUT); 
-    pinMode(CPin, OUTPUT); 
-    pinMode(DPin, OUTPUT); 
-    pinMode(EPin, OUTPUT); 
-    pinMode(FPin, OUTPUT); 
-    pinMode(GPin, OUTPUT);
+  // Segment Pin Mode
+  pinMode(APin, OUTPUT); 
+  pinMode(BPin, OUTPUT); 
+  pinMode(CPin, OUTPUT); 
+  pinMode(DPin, OUTPUT); 
+  pinMode(EPin, OUTPUT); 
+  pinMode(FPin, OUTPUT); 
+  pinMode(GPin, OUTPUT);
 
-    // Gear Switch Pin Mode
-    pinMode(upShiftPin, INPUT); 
-    pinMode(downShiftPin, INPUT); 
-    pinMode(solenoidUpSwitchPin, INPUT);
-    pinMode(solenoidDownSwitchPin, INPUT);
+  // Gear Switch Pin Mode
+  pinMode(upShiftPin, INPUT); 
+  pinMode(downShiftPin, INPUT); 
+  pinMode(solenoidUpSwitchPin, INPUT);
+  pinMode(solenoidDownSwitchPin, INPUT);
     
-    // Cycle Through Gear Counter
-    for(int i = 6; i >= 0; i++){
-        switch(i){
-            case 0:
-                disp_zero_gear();
-                break;
-            case 1:
-                disp_first_gear();
-                break;
-            case 2:
-                disp_second_gear();
-                break;
-            case 3:
-                disp_third_gear();
-                break;
-            case 4:
-                disp_fourth_gear();
-                break;
-            case 5:
-                disp_fifth_gear();
-                break;
-            case 6:
-                disp_sixth_gear();
-                break;
-        }//End of Switch Case
-        delay(2500); // wait x ms in displaying gear indicator
-        turn_off_gear();
-    }//End of ForLoop
+  // Cycle Through Gear Counter
+  for(int i = 0; i < 7; ++i){
+      switch(i){
+          case 0:
+              disp_zero_gear();
+              break;
+          case 1:
+              disp_first_gear();
+              break;
+          case 2:
+              disp_second_gear();
+              break;
+          case 3:
+              disp_third_gear();
+              break;
+          case 4:
+              disp_fourth_gear();
+              break;
+          case 5:
+              disp_fifth_gear();
+              break;
+          case 6:
+              disp_sixth_gear();
+              break;
+      }//End of Switch Case
+      delay(500); // wait x ms in displaying gear indicator
+      turn_off_gear();
+  }//End of ForLoop
 
-    // F for respect
-    for(int i = 0; i > 7; i++){
-        disp_f_gear();
-        delay(250);
-        turn_off_gear();
-    }
-    disp_f_gear();
-    delay(1000);
-    turn_off_gear();
-    
-    //
-    delay(2500); 
-    disp_zero_gear();
-
+  // F for respect
+  for(int i = 0; i < 8; i++){
+      disp_f_gear();
+      delay(500);
+      turn_off_gear();
+      delay(500);
+  }
+  disp_f_gear();
+  delay(1500);
+  turn_off_gear();
+  delay(500); 
+  disp_zero_gear();
+  
 }//End of Setup
 
 //=======================================================================================
@@ -196,91 +195,87 @@ void setup(){
 //=======================================================================================
 
 void loop(){
-	// When the user pressed down the up shift paddle
-	if ( digitalRead(upShiftPin) == HIGH ){
-	    // Increase Gear Counter
-	    switch(gearCounter+1){
-		case 1:
-		    disp_first_gear();
-		    gearCounter++;
-		    break;
-		case 2:
-		    disp_second_gear();
-		    gearCounter++;
-		    break;
-		case 3:
-		    disp_third_gear();
-		    gearCounter++;
-		    break;
-		case 4:
-		    disp_fourth_gear();
-		    gearCounter++;
-		    break;
-		case 5:
-		    disp_fifth_gear();
-		    gearCounter++;
-		    break;
-		case 6:
-		    disp_sixth_gear();
-		    gearCounter++;
-		    break;
-	    }//End of Switch Case
+  // When the user pressed down the up shift paddle
+  if ( digitalRead(upShiftPin) == HIGH ){
+    // Increase Gear Counter
+    switch(gearCounter+1){
+      case 1:
+        disp_first_gear();
+        gearCounter++;
+        break;
+      case 2:
+        disp_second_gear();
+        gearCounter++;
+        break;
+      case 3:
+        disp_third_gear();
+        gearCounter++;
+        break;
+      case 4:
+        disp_fourth_gear();
+        gearCounter++;
+        break;
+      case 5:
+       disp_fifth_gear();
+       gearCounter++;
+       break;
+      case 6:
+        disp_sixth_gear();
+        gearCounter++;
+        break;
+    }//End of Switch Case
 
-	    // Engage Solenoid to UpShift
-	    digitalWrite(solenoidUpSwitchPin, HIGH);	// Write to solenoid_up_pin to high
-            // Wait till solenoid push out piston for upshift
-	    delay(shiftTime);                   	
-            // Disengage Solenoid to Neutral State
-	    digitalWrite(solenoidUpSwitchPin, LOW);	// Write to solenoid_up_pin to low
+    // Engage Solenoid to UpShift
+    digitalWrite(solenoidUpSwitchPin, HIGH);  // Write to solenoid_up_pin to high
+    delay(shiftTime);                         // Wait till solenoid push out piston for upshift
+    digitalWrite(solenoidUpSwitchPin, LOW);   // Write to solenoid_up_pin to low
 
-        // While loop till button has been released
-        while ( digitialRead(upShiftPin) == HIGH)
-        {
-            // Do nothing till release
-        }
-	}//End of upshift
+    // While loop till button has been released
+    while ( digitalRead(upShiftPin) == HIGH)
+    {
+        // Do nothing till release
+    }
+  }//End of upshift
 
-	// When the user pressed down the down shift paddle
-    else if ( digitalRead(downShiftPin) == HIGH ){
-        // Decrease Gear Counter
-        switch(gearCounter-1){
-		case 0:
-		    disp_zero_gear();
-		    gearCounter--;
-		    break;
-		case 1:
-		    disp_first_gear();
-		    gearCounter--;
-		    break;
-		case 2:
-		    disp_second_gear();
-		    gearCounter--;
-		    break;
-		case 3:
-		    disp_third_gear();
-		    gearCounter--;
-		    break;
-		case 4:
-		    disp_fourth_gear();
-		    gearCounter--;
-		    break;
-		case 5:
-		    disp_fifth_gear();
-		    gearCounter--;
-		    break;
-        }//End of Switch Case
+  // When the user pressed down the down shift paddle
+  else if ( digitalRead(downShiftPin) == HIGH ){
+    // Decrease Gear Counter
+    switch(gearCounter-1){
+      case 0:
+        disp_zero_gear();
+        gearCounter--;
+        break;
+      case 1:
+        disp_first_gear();
+        gearCounter--;
+        break;
+      case 2:
+        disp_second_gear();
+        gearCounter--;
+        break;
+      case 3:
+        disp_third_gear();
+        gearCounter--;
+        break;
+      case 4:
+        disp_fourth_gear();
+        gearCounter--;
+        break;
+      case 5:
+        disp_fifth_gear();
+        gearCounter--;
+        break;
+      }//End of Switch Case
 
-        // Engage Solenoid to Downshift
-        digitalWrite(solenoidDownSwitchPin, HIGH);	// Write to solenoid_down_pin to high
-	// Wait till solenoid pulll in piston for downshift
-        delay(shiftTime);                    	
-        // Disengage Solenoid to Neutral State
-        digitalWrite(solenoidDownSwitchPin, LOW);	// Write to solenoid_down_pin to low
+      // Engage Solenoid to Downshift
+      digitalWrite(solenoidDownSwitchPin, HIGH);  // Write to solenoid_down_pin to high
+      delay(shiftTime);                    	      // Wait till solenoid pulll in piston for downshift
+      digitalWrite(solenoidDownSwitchPin, LOW);	  // Write to solenoid_down_pin to low
 
-        // While loop till button has been released
-        while ( digitialRead(downShiftPin) == HIGH)
-        {
-            // Do nothing till release
-        }
-	}//End of downshift
+      // While loop till button has been released
+      while ( digitalRead(downShiftPin) == HIGH)
+      {
+          // Do nothing till release
+      }
+  }//End of downshift
 }//End of Loop
