@@ -143,8 +143,8 @@ void setup(){
   // Gear Switch Pin Mode
   pinMode(upShiftPin, INPUT); 
   pinMode(downShiftPin, INPUT); 
-  pinMode(solenoidUpSwitchPin, INPUT);
-  pinMode(solenoidDownSwitchPin, INPUT);
+  pinMode(solenoidUpSwitchPin, OUTPUT);
+  pinMode(solenoidDownSwitchPin, OUTPUT);
     
   // Cycle Through Gear Counter
   for(int i = 0; i < 7; ++i){
